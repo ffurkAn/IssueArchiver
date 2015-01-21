@@ -1,0 +1,89 @@
+<!doctype html>
+<html ng-app="IssueArchiver">
+<head>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
+<script type="text/javascript" src="javascripts/angular-multi-select.js"></script> 
+
+<link rel="stylesheet" type="text/css" media="all" href="stylesheets/angular-multi-select.css">
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html">
+
+<title>Issue Archiver V1.0</title>
+<link rel="stylesheet" type="text/css" media="all" href="stylesheets/IssueArchiver.css">
+<script type="text/javascript" src="javascripts/IssueArchiver.js"></script>
+
+</head>
+
+<body>
+	
+	<div ng-controller="IssueArchiverCtrl"  >
+		<div id="w" >
+			<h1>Issue Archiver</h1>
+
+			<p>Select repository for Model Writer to archive issues in it.</p>
+
+			<input type="text" id="ghorganizationname" style="float:left;" ng-model="orgname" placeholder="modelwriter"> 
+			<a href="#" id="ghsubmitbtn" style="float:left; margin-left:10px;" data-ng-init="getRepos()" ng-click="getRepos()">Get Repos</a> 
+							
+   			<div class="clear"></div>
+   			
+   			<div id="selection" style="float:left; width:375px;">
+ 			<br>
+   			
+   				<b><p style="float:left; width:90px;" ng-show="reposLoaded">Repository:</p>  </b>			    	
+				<div multi-select
+					ng-show="reposLoaded" 
+					input-model="repos"
+					output-model="resultRepos" 
+					button-label="name"
+					item-label="name"
+					default-label="All"
+					tick-property="ticked"
+					on-item-click="getIssues()">
+					
+				</div>  
+			      
+				<div ng-show="reposNotFound">
+	      		<h2>No Repo Info Found</h2>
+	   			</div>
+	   			
+				<div class="clear"></div><br><br>
+				
+				<b><p style="float:left; width:90px;" ng-show="statesLoaded">State:</p>  </b>
+    			<div multi-select
+					ng-show="statesLoaded" 
+					input-model="states"
+					output-model="resultState" 
+					button-label="name"
+					item-label="name"
+					selection-mode="single" 
+					on-item-click="filterIssues()"
+					default-label="All"
+					tick-property="ticked">
+				</div>  						
+				<div ng-show="statesNotFound">
+	      			<h2>No State Info Found</h2>
+	   			</div> 
+	   			
+	   			<div class="clear"></div><br><br>
+	   			
+	   			<div id="div" style="float:right; padding-right:35px;" >
+	   				<h2 id="issueCount"></h2>
+	   			</div> 
+	   			 
+				<div class="clear"></div><br>
+				<a ng-show="buttonLoaded" href="#" id="downloadbtn" ng-click="download()">Save Issues</a> 
+
+			</div>
+		
+		<div id="ghapidata" class="clearfix"></div>
+		<p>Developed by UNIT Technologies and Information R&D Ltd. - V1.0</p>
+	</div>
+	<br><br>
+	
+</div>
+
+</body>
+
+</html>
